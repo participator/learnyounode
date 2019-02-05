@@ -4,11 +4,16 @@
   "description": "",
   "main": "01_printToConsole.js",
   "dependencies": {
-    "bl": "^2.1.2"
+    "bl": "^2.1.2",
+    "strftime": "^0.10.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "through2-map": "^3.0.0"
+  },
   "scripts": {
-    "test": "node 01_printToConsole.js 1 2 3 4 5 10"
+    "01test": "node 01_printToConsole.js 1 2 3 4 5 10",
+    "02test": "node 02_inputFromConsole.js 1 2 3 4 5",
+    "11test": "node 11_httpFileServer.js 9080 11_httpFileServer.js"
   },
   "keywords": [
     "node",

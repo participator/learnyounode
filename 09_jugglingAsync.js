@@ -28,24 +28,23 @@ urls.forEach(url => {
             });
             responseObj.data += string;
         });
+        res.on('close', () => {
+            console.log('[Interruption] connection closed before response was ended.');
+        })
 
         res.on('error', console.error);
 
-        // TODO: find out difference between response.end and http.close and http.finish events
-        res.on('end', () => {
-            const responseObj = responseDataList.filter(responseObj => {
-                return responseObj.id === current;
-            });
-            console.log('[close event]', responseObj);
+        // TODO: find out difference between response.end and response.close and http.finish events
+        res.on('end', (data, encoding) => {
             current++;
+    
+            if (counter === current) {
+                responseDataList.forEach(responseObj => {
+                    console.log(responseObj.data);
+                })
+            }
         });
     })
-    .on('error', console.error)
-    // .on('close', () => {
-    //     const responseObj = responseDataList.find(responseObj => {
-    //         return responseObj.id === current;
-    //     });
-    //     console.log(responseObj.data);
-    //     current++;
-    // })
+    .on('error', console.error);
+    //.on('finish', () => console.log('response sent')); // emitted when the response is sent to the OS (not when it is received by the client)
 });
